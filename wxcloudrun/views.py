@@ -84,5 +84,5 @@ def receive_message():
     # 打印消息
     message = params['message']
     print(f"Received message: {message}")
-    logger.info(f"Received message: {message}")
-    return make_succ_response('消息已接收')
+    logger.error(f"Received message: {message}")
+    return make_succ_response(params)
