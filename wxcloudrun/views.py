@@ -89,14 +89,10 @@ def receive_message():
     # 将XML数据转换为字典
     params = {child.tag: child.text for child in root}
 
-    # 检查message参数
-    if 'message' not in params:
-        return make_err_response('缺少message参数')
+    # 打印消息内容
+    for key, value in params.items():
+        logger.info(f"{key}: {value}")
 
-    # 打印消息
-    message = params['message']
-    print(f"Received message: {message}")
-    logger.error(f"Received message: {message}")
     return make_succ_response(params)
 
 @app.route('/api/message_v2', methods=['POST'])
