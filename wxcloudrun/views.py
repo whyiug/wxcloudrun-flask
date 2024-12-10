@@ -5,6 +5,7 @@ from wxcloudrun.dao import delete_counterbyid, query_counterbyid, insert_counter
 from wxcloudrun.model import Counters
 from wxcloudrun.response import make_succ_empty_response, make_succ_response, make_err_response
 import logging
+import xml.etree.ElementTree as ET
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('log')
@@ -72,11 +73,21 @@ def get_count():
 @app.route('/api/message', methods=['POST'])
 def receive_message():
     """
-    :return: 接收并打印用户消息
+    :return: 接收并打印用户消息（XML格式）
     """
-    # 获取请求体参数
-    params = request.get_json()
-    logger.info("我在这里呀")
+    # 获取请求体参数（XML格式）
+    try:
+        xml_data = request.data
+        root = ET.fromstring(xml_data)
+    except ET.ParseError as e:
+        logger.error(f"XML解析错误: {e}")
+        return make_err_response('XML解析错误')
+
+    # 打印接收到的XML数据
+    logger.info(f"Received XML: {xml_data.decode('utf-8')}")
+
+    # 将XML数据转换为字典
+    params = {child.tag: child.text for child in root}
 
     # 检查message参数
     if 'message' not in params:
