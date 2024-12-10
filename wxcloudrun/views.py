@@ -4,7 +4,9 @@ from run import app
 from wxcloudrun.dao import delete_counterbyid, query_counterbyid, insert_counter, update_counterbyid
 from wxcloudrun.model import Counters
 from wxcloudrun.response import make_succ_empty_response, make_succ_response, make_err_response
+import logging
 
+logger = logging.getLogger('log')
 
 @app.route('/')
 def index():
@@ -73,7 +75,8 @@ def receive_message():
     """
     # 获取请求体参数
     params = request.get_json()
-    print("我在这里呀")
+    logger.info("我在这里呀")
+
     # 检查message参数
     if 'message' not in params:
         return make_err_response('缺少message参数')
@@ -81,5 +84,5 @@ def receive_message():
     # 打印消息
     message = params['message']
     print(f"Received message: {message}")
-
+    logger.info(f"Received message: {message}")
     return make_succ_response('消息已接收')
