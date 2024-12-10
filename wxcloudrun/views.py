@@ -86,3 +86,15 @@ def receive_message():
     print(f"Received message: {message}")
     logger.error(f"Received message: {message}")
     return make_succ_response(params)
+
+@app.route('/api/message_v2', methods=['POST'])
+def receive_message_v2():
+    """
+    :return: 接收消息并返回success
+    """
+    # 获取请求体参数
+    params = request.get_json()
+    logger.info(f"消息推送: {params}")
+
+    # 返回success，告知微信服务器已经正常收到
+    return "success"
