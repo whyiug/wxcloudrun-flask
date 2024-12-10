@@ -95,6 +95,7 @@ def receive_message_v2():
     # 获取请求体参数
     params = request.get_json()
     logger.info(f"消息推送: {params}")
+    print(f"消息推送: {params}")
 
     # 返回success，告知微信服务器已经正常收到
     return "success"
