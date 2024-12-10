@@ -6,6 +6,7 @@ from wxcloudrun.model import Counters
 from wxcloudrun.response import make_succ_empty_response, make_succ_response, make_err_response
 import logging
 
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('log')
 
 @app.route('/')
